@@ -1,14 +1,14 @@
 from django.db import models
 from sortedm2m.fields import SortedManyToManyField
-from datetime import datetime
+import time
 from django.contrib.auth.models import User
 import string
 
 
 def content_file_name(instance, filename):
     doug = str(filename)
-    pete = datetime.strftime("%Y%m%d_%H%M%S") + doug[doug.rfind('.'):]
-    return '/'.join(['content', str(instance.user.id), pete])
+    pete = time.strftime("%Y%m%d_%H%M%S") + doug[doug.rfind('.'):]
+    return '/'.join(['images', str(instance.user.id), pete])
 
 
 class TutComment(models.Model):
@@ -18,7 +18,7 @@ class TutComment(models.Model):
         self.save()
 
     def __str__(self):
-        return self.title
+        return self.text
 
 
 class TutImageComment(TutComment):
