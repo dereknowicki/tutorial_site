@@ -1,0 +1,13 @@
+{% block content %}
+    <div>
+        <h1>{{ tut.title }}</h1>
+        <p>{{ tut.text|linebreaks }}</p>
+        <div>
+            {% for sub in subs %}
+                <div>
+                    <a href="{% url 'tut_detail' tut_id=sub.pk %}">{{ sub.title }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
