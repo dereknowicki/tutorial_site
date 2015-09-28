@@ -2,12 +2,15 @@
     <div>
         <h1>{{ tut.title }}</h1>
         <p>{{ tut.text|linebreaks }}</p>
-        <div>
+        <ol>
             {% for sub in subs %}
-                <div>
-                    <a href="{% url 'tut_detail' tut_id=sub.pk %}">{{ sub.title }}</a>
-                </div>
+                <li>
+                    <div>
+                        <a href="{% url 'tut_detail' tut_id=sub.pk %}">{{ sub.title }}</a>
+                        <p>{{sub.text|linebreaks}}</p>
+                    </div>
+                </li>
             {% endfor %}
-        </div>
+        </ol>
     </div>
 {% endblock %}
