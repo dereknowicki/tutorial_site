@@ -12,5 +12,10 @@
                 </li>
             {% endfor %}
         </ol>
+        <ul>
+            {% for com in tcoms %}
+                <li><p>{{com.text|linebreaks}}</p></li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

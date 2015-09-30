@@ -22,7 +22,7 @@ class TutComment(models.Model):
 
 
 class TutImageComment(TutComment):
-    photo = models.ImageField(upload_to=content_file_name)  # uses the content_file_name function above
+    photo = models.ImageField(upload_to=content_file_name, blank=True)  # uses the content_file_name function above
     user = models.ForeignKey(User, default='derek')  # to be set by the form from the current logged in user
 
 class TutUrlComment(TutComment):
@@ -33,7 +33,7 @@ class Tutorial(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
     subtuts = SortedManyToManyField('self', blank=True, symmetrical=False)
-    comments = SortedManyToManyField(TutComment, blank=True, symmetrical=False)
+    tut_comms = SortedManyToManyField(TutComment, blank=True, symmetrical=False)
 
     def publish(self):
         self.save()

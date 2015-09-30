@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Tutorial
+from .models import Tutorial, TutComment, TutImageComment, TutUrlComment
 
 def tut_list(request):
     tuts = Tutorial.objects.all()
@@ -8,4 +8,5 @@ def tut_list(request):
 def tut_detail(request, tut_id):
     tut = get_object_or_404(Tutorial, id=tut_id) #get the specific tutorial object
     subs = Tutorial.objects.get(id=tut_id).subtuts.all()
-    return render(request, 'tutorials/tut_detail.html', {'tut': tut, 'subs':subs})
+    tcoms = Tutorial.objects.get(id=tut_id).tut_comms.all()
+    return render(request, 'tutorials/tut_detail.html', {'tut': tut, 'subs':subs, 'tcoms': tcoms})
