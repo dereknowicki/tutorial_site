@@ -1,15 +1,16 @@
+{% block content %}
 <html>
     <head>
         <title>Tutorial List</title>
     </head>
     <body>
-
         <div>
             {% for tut in all_tuts %}
                 <div>
-                    <h1></h1><a href="{% url 'tut_detail' tut_id=tut.pk %}">{{ tut.title }}</a></h1>
+                    <a href="{% url 'tut_detail' tut_id=tut.pk %}">{{ tut.title }}</a>
                 </div>
             {% endfor %}
         </div>
     </body>
 </html>
+{% endblock %}

@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.tut_list, name='tut_list'),
     url(r'^tutorials/(?P<tut_id>[0-9]+)/$', views.tut_detail, name='tut_detail'),
+    url(r'^tutorial/new/$', views.tut_builder, name='tut_builder'),
 ]
 
 '''

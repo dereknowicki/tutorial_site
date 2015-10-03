@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Tutorial, TutComment, TutImageComment, TutUrlComment
+from .forms import TutorialForm
+from django.shortcuts import redirect
+from django.db.models import Count
+
 
 def tut_list(request):
-    tuts = Tutorial.objects.all()
+    tuts = Tutorial.objects.all().annotate(num_subs=Count('subtuts')).order_by('-num_subs')
     return render(request, 'tutorials/tut_list.html', {'all_tuts': tuts})
 
 def tut_detail(request, tut_id):
@@ -10,3 +14,14 @@ def tut_detail(request, tut_id):
     subs = Tutorial.objects.get(id=tut_id).subtuts.all()
     tcoms = Tutorial.objects.get(id=tut_id).tut_comms.all()
     return render(request, 'tutorials/tut_detail.html', {'tut': tut, 'subs':subs, 'tcoms': tcoms})
+
+def tut_builder(request):
+    if request.method == "POST": #for when the form has been filled out and the save button clicked
+        form = TutorialForm(request.POST)
+        if form.is_valid():
+            tut = form.save(commit=False)
+            tut.save()
+            return redirect('tutorials.views.tut_detail', tut_id = tut.pk)
+    else: #for empty form
+        form = TutorialForm()
+    return render(request, 'tutorials/tut_builder.html', {'form': form})
