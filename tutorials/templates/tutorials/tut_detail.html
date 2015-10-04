@@ -15,6 +15,11 @@
         <ul>
             {% for com in tcoms %}
                 <li><p>{{com.text|linebreaks}}</p></li>
+                {% if com.com_type == "image" %}
+                    <img src="../../{{com.photo}}">
+                {% elif com.com_type == "url" %}
+                    <a href="{{com.link}}">{{com.link}}</a>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>

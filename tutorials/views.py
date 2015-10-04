@@ -12,7 +12,15 @@ def tut_list(request):
 def tut_detail(request, tut_id):
     tut = get_object_or_404(Tutorial, id=tut_id) #get the specific tutorial object
     subs = Tutorial.objects.get(id=tut_id).subtuts.all()
-    tcoms = Tutorial.objects.get(id=tut_id).tut_comms.all()
+    qset = Tutorial.objects.get(id=tut_id).tut_comms.all()
+    tcoms = []
+    for ob in qset:
+        if hasattr(ob, 'tutimagecomment'):
+            tcoms.append(TutImageComment.objects.get(id=ob.id))
+        elif hasattr(ob, 'tuturlcomment'):
+            tcoms.append(TutUrlComment.objects.get(id=ob.id))
+        else:
+            tcoms.append(ob)
     return render(request, 'tutorials/tut_detail.html', {'tut': tut, 'subs':subs, 'tcoms': tcoms})
 
 def tut_builder(request):

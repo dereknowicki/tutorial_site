@@ -20,13 +20,22 @@ class TutComment(models.Model):
     def __str__(self):
         return self.text
 
+    def com_type(self):
+        return 'text'
+
 
 class TutImageComment(TutComment):
     photo = models.ImageField(upload_to=content_file_name, blank=True)  # uses the content_file_name function above
     user = models.ForeignKey(User, default='derek')  # to be set by the form from the current logged in user
 
+    def com_type(self):
+        return 'image'
+
 class TutUrlComment(TutComment):
     link = models.URLField(max_length=2000, blank=True)
+
+    def com_type(self):
+        return 'url'
 
 
 class Tutorial(models.Model):
